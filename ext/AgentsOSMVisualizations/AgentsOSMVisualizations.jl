@@ -14,10 +14,12 @@ default_colors["tertiary"] = colorant"#b3b381"
 
 function Agents.osmplot!(ax::Axis, p::_ABMPlot; kwargs...)
     osm_plot = OSMMakie.osmplot!(ax, abmspace(p.abmobs[].model[]).map;
-        graphplotkwargs = (; arrow_show = false), kwargs...
+        graphplotkwargs=(; arrow_show=false), kwargs...
     )
     osm_plot.plots[1].plots[1].plots[1].inspectable[] = false
-    osm_plot.plots[1].plots[3].inspectable[] = false
+    # @show size(osm_plot.plots)
+    # @show size(osm_plot.plots[1].plots)
+    osm_plot.plots[1].plots[2].inspectable[] = false
     return
 end
 

@@ -26,6 +26,7 @@ export test_map,
     nearest_road,
     same_position,
     same_road,
+    deez,
     download_osm_network    # re-exported from LightOSM.jl
 
 ###########################################################################################
@@ -147,6 +148,10 @@ function Base.show(io::IO, s::OpenStreetMapSpace)
         "OpenStreetMapSpace with $(length(s.map.ways)) ways " *
         "and $(length(s.map.nodes)) nodes",
     )
+end
+
+function deez()
+    return "nuts"
 end
 
 """
