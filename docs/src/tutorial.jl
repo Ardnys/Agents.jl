@@ -400,7 +400,7 @@ end
 # the evolution rules, the space, model-level properties, and more.
 
 # Additionally [`AgentBasedModel`](@ref) defines an interface that research
-# can build upon to create new flavors of ABMs that can still benefit for the
+# can build upon to create new flavors of ABMs that can still benefit from the
 # thousands of functions Agents.jl offers out of the box such as [`move_agent!`](@ref).
 
 # ## Step 4: initializing the model
@@ -600,7 +600,7 @@ groupmarker(a) = a.group == 1 ? :circle : :rect
 
 # We pass those functions to [`abmplot`](@ref)
 
-figure, _ = abmplot(model; agent_color = groupcolor, agent_marker = groupmarker, as = 10)
+figure, _ = abmplot(schelling; agent_color = groupcolor, agent_marker = groupmarker, as = 10)
 figure # returning the figure displays it
 
 # The function [`abmvideo`](@ref) can be used to save an animation of the ABM into a video.

@@ -152,7 +152,7 @@ function StandardABM(
         ABMObservable.
         """ maxlog=1
     end
-    !(ismultiagenttype(A)) && !(is_sumtype(A)) && agent_validator(A, space, warn)
+    !(is_sumtype(A)) && agent_validator(A, space, warn)
     C = construct_agent_container(container, A)
     agents = C()
     agents_types = union_types(A)
@@ -173,6 +173,12 @@ construct_agent_container(container, A) = throw(
 
 function remove_all_from_model!(model::StandardABM)
     empty!(agent_container(model))
+end
+
+function remove_all_from_space!(model)
+    for a in allagents(model)
+        remove_agent_from_space!(a, model)
+    end
 end
 
 
