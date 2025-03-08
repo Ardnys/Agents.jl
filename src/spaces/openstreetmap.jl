@@ -142,6 +142,16 @@ function OpenStreetMapSpace(path::AbstractString; kwargs...)
 end
 
 """
+    Graph initialization from object. I add it for testing purposes
+"""
+function OpenStreetMapSpace(obj::Dict{String,Any}; kwargs...)
+    m = graph_from_object(obj; weight_type=:distance, kwargs...)
+    LightOSM.add_rtree!(m)
+    agent_positions = [Int[] for _ in 1:Agents.nv(m.graph)]
+    return OpenStreetMapSpace(m, agent_positions, Dict())
+end
+
+"""
     Our version of space initialization. Given `OSMGraph` is used to initialize the OSMSpace.
 """
 function OpenStreetMapSpace(m::OSMGraph)
