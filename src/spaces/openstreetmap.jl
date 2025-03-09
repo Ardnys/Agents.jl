@@ -155,7 +155,6 @@ end
     Our version of space initialization. Given `OSMGraph` is used to initialize the OSMSpace.
 """
 function OpenStreetMapSpace(m::OSMGraph)
-    LightOSM.add_rtree!(m)
     agent_positions = [Int[] for _ in 1:Agents.nv(m.graph)]
     return OpenStreetMapSpace(m, agent_positions, Dict())
 end
