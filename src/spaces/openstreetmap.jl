@@ -254,6 +254,10 @@ the length of the road, return `false` as well.
 
 Specifying `return_trip = true` also requires the existence of a return path for a route to
 be planned.
+
+# Note
+This implementation of `plan_route` is **NOT** the default behaviour of Agents.jl. This has been modified to fit SEISIM's requirements.
+Use it with [this version of LightOSM](https://github.com/Ardnys/LightOSM.jl). 
 """
 function Agents.plan_route!(
     agent::AbstractAgent,
@@ -286,6 +290,19 @@ function Agents.plan_route!(
     end
 
     start_node = closest_node_on_edge(agent.pos, model)
+
+    # custom start_node for when the agent is between a blocked node and open node
+    map = abmspace(model).map
+
+    first_id, second_id = map.index_to_node[agent.pos[1]], map.index_to_node[agent.pos[2]]
+    first_node, second_node = map.nodes[first_id], map.nodes[second_id]
+    
+    if first_node.blocked != second_node.blocked
+        # start agent from unblocked node
+        index = first_node.blocked ? 2 : 1
+        start_node = agent.pos[index]
+    end
+    # end of the custom start_node assignment
 
     end_node = closest_node_on_edge(dest, model)
 
