@@ -291,7 +291,9 @@ function Agents.plan_route!(
 
     start_node = closest_node_on_edge(agent.pos, model)
 
-    # custom start_node for when the agent is between a blocked node and open node
+    end_node = closest_node_on_edge(dest, model)
+
+    # custom start and end for when the agent is between a blocked node and open node
     map = abmspace(model).map
 
     first_id, second_id = map.index_to_node[agent.pos[1]], map.index_to_node[agent.pos[2]]
@@ -302,9 +304,16 @@ function Agents.plan_route!(
         index = first_node.blocked ? 2 : 1
         start_node = agent.pos[index]
     end
-    # end of the custom start_node assignment
 
-    end_node = closest_node_on_edge(dest, model)
+    first_id, second_id = map.index_to_node[dest[1]], map.index_to_node[dest[2]]
+    first_node, second_node = map.nodes[first_id], map.nodes[second_id]
+    
+    if first_node.blocked != second_node.blocked
+        # start agent from unblocked node
+        index = first_node.blocked ? 2 : 1
+        end_node = dest[index]
+    end
+    # end of the custom assignment
 
     if start_node == end_node # LightOSM doesn't like this case
         if agent.pos[1] == agent.pos[2] # start at node
@@ -450,6 +459,28 @@ function distance(
 
     # ending vertex
     en_node = closest_node_on_edge(pos_2, model)
+
+    # custom start and end node for when the pos_1 is between a blocked node and open node
+    map = abmspace(model).map
+
+    first_id, second_id = map.index_to_node[pos_1[1]], map.index_to_node[pos_1[2]]
+    first_node, second_node = map.nodes[first_id], map.nodes[second_id]
+    
+    if first_node.blocked != second_node.blocked
+        # start agent from unblocked node
+        index = first_node.blocked ? 2 : 1
+        st_node = pos_1[index]
+    end
+
+    first_id, second_id = map.index_to_node[pos_2[1]], map.index_to_node[pos_2[2]]
+    first_node, second_node = map.nodes[first_id], map.nodes[second_id]
+    
+    if first_node.blocked != second_node.blocked
+        # start agent from unblocked node
+        index = first_node.blocked ? 2 : 1
+        en_node = pos_2[index]
+    end
+    # end of the custom assignment
 
     # Case where they are same
     if st_node == en_node
