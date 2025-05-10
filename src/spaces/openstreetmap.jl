@@ -299,19 +299,19 @@ function Agents.plan_route!(
     first_id, second_id = map.index_to_node[agent.pos[1]], map.index_to_node[agent.pos[2]]
     first_node, second_node = map.nodes[first_id], map.nodes[second_id]
     
-    if first_node.blocked != second_node.blocked
-        # start agent from unblocked node
-        index = first_node.blocked ? 2 : 1
-        start_node = agent.pos[index]
+    if first_node.blocked_status == 2
+        start_node = agent.pos[2]
+    elseif second_node.blocked_status == 2
+        start_node = agent.pos[1]
     end
 
     first_id, second_id = map.index_to_node[dest[1]], map.index_to_node[dest[2]]
     first_node, second_node = map.nodes[first_id], map.nodes[second_id]
     
-    if first_node.blocked != second_node.blocked
-        # start agent from unblocked node
-        index = first_node.blocked ? 2 : 1
-        end_node = dest[index]
+    if first_node.blocked_status == 2
+        end_node = dest[2]
+    elseif second_node.blocked_status == 2
+        end_node = dest[1]
     end
     # end of the custom assignment
 
@@ -466,19 +466,19 @@ function distance(
     first_id, second_id = map.index_to_node[pos_1[1]], map.index_to_node[pos_1[2]]
     first_node, second_node = map.nodes[first_id], map.nodes[second_id]
     
-    if first_node.blocked != second_node.blocked
-        # start agent from unblocked node
-        index = first_node.blocked ? 2 : 1
-        st_node = pos_1[index]
+    if first_node.blocked_status == 2
+        st_node = pos_1[2]
+    elseif second_node.blocked_status == 2
+        st_node = pos_1[1]
     end
 
     first_id, second_id = map.index_to_node[pos_2[1]], map.index_to_node[pos_2[2]]
     first_node, second_node = map.nodes[first_id], map.nodes[second_id]
     
-    if first_node.blocked != second_node.blocked
-        # start agent from unblocked node
-        index = first_node.blocked ? 2 : 1
-        en_node = pos_2[index]
+    if first_node.blocked_status == 2
+        start_node = pos_2[2]
+    elseif second_node.blocked_status == 2
+        start_node = pos_2[1]
     end
     # end of the custom assignment
 
