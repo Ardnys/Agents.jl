@@ -304,15 +304,6 @@ function Agents.plan_route!(
     elseif second_node.blocked_status == 2
         start_node = agent.pos[1]
     end
-
-    first_id, second_id = map.index_to_node[dest[1]], map.index_to_node[dest[2]]
-    first_node, second_node = map.nodes[first_id], map.nodes[second_id]
-    
-    if first_node.blocked_status == 2
-        end_node = dest[2]
-    elseif second_node.blocked_status == 2
-        end_node = dest[1]
-    end
     # end of the custom assignment
 
     if start_node == end_node # LightOSM doesn't like this case
@@ -470,15 +461,6 @@ function distance(
         st_node = pos_1[2]
     elseif second_node.blocked_status == 2
         st_node = pos_1[1]
-    end
-
-    first_id, second_id = map.index_to_node[pos_2[1]], map.index_to_node[pos_2[2]]
-    first_node, second_node = map.nodes[first_id], map.nodes[second_id]
-    
-    if first_node.blocked_status == 2
-        start_node = pos_2[2]
-    elseif second_node.blocked_status == 2
-        start_node = pos_2[1]
     end
     # end of the custom assignment
 
